@@ -9,6 +9,16 @@ export default class WeatherData implements Subject {
 
 	constructor() {}
 
+	get temperature() {
+		return this.#temperature;
+	}
+	get humidity() {
+		return this.#humidity;
+	}
+	get pressure() {
+		return this.#pressure;
+	}
+
 	registerObserver(o: Observer): void {
 		this.#observers.push(o);
 	}
@@ -19,11 +29,7 @@ export default class WeatherData implements Subject {
 
 	notifyObserver() {
 		this.#observers.forEach((o) => {
-			o.update({
-				temp: this.#temperature,
-				humidity: this.#humidity,
-				pressure: this.#pressure,
-			});
+			o.update();
 		});
 	}
 
