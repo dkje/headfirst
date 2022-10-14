@@ -1,0 +1,1 @@
+export const BEVERAGE_DEFAULT_DESCRIPTION = "제목 없음"
