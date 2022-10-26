@@ -1,12 +1,6 @@
+import { Pizza } from "./Pizza.type";
 interface SimplePizzaFactory {
 	createPizza(type: string): Pizza;
-}
-
-interface Pizza {
-	prepare(): void;
-	bake(): void;
-	cut(): void;
-	box(): void;
 }
 
 abstract class PizzaStore {
@@ -21,5 +15,3 @@ abstract class PizzaStore {
 
 	abstract createPizza(type: string): Pizza;
 }
-
-
