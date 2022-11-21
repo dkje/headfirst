@@ -9,6 +9,7 @@ describe("Whip 토핑 테스트", () => {
 			return "음료";
 		},
 	};
+
 	const customBeverage = new Whip(beverage);
 	it("cost 메소드는 음료 가격에 0.5를 더한 값을 반환한다", () => {
 		expect(customBeverage.cost()).toBe(1.5);
