@@ -1,4 +1,4 @@
-import { Coffee, Tea } from './Beverage';
+import { Coffee, Tea } from './BeverageWithHook';
 
 const main = () => {
     console.log("---- 차 끓기기")
