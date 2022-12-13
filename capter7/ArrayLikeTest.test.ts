@@ -24,8 +24,6 @@ test('ArrayLikeEnumberable은 Object를 enumerable하게 만들어준다.', () =
     result.push(arrayLike.item());
     arrayLike.moveNext();
 
-
-
     while (arrayLike.item()) {
         result.push(arrayLike.item());
         arrayLike.moveNext();
