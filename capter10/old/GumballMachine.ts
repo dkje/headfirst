@@ -36,6 +36,7 @@ export class GumballMachine implements GumballMachineIF {
     ejectQuarter(): void {
         if (this.state === 'HAS_QUARTER') {
             console.log("동전을 반환합니다.");
+            this.state = 'NO_QUARTER'
         } else if (this.state === 'NO_QUARTER') {
             console.error("동전이 없습니다.");
         } else if (this.state === 'SOLD') {
@@ -48,7 +49,7 @@ export class GumballMachine implements GumballMachineIF {
     turnCrank(): void {
         if (this.state === 'HAS_QUARTER') {
             console.log("손잡이를 돌리셨습니다.");
-            this.state = 'NO_QUARTER';
+            this.state = 'SOLD';
         } else if (this.state === 'NO_QUARTER') {
             console.error('동전을 넣어주세요.');
         } else if (this.state === 'SOLD') {

@@ -51,19 +51,20 @@ describe("풍선껌 기계", () => {
         expect(spyConsole).toHaveBeenCalledWith('동전이 이미 있습니다.');
     })
 
-    test(`HAS_QUARTER 상태 일 때 ejectQuarter를 실행하면 동전을 반환한다`, () => {
+    test(`HAS_QUARTER 상태 일 때 ejectQuarter를 실행하면 동전을 반환하고 상태를 NO_QUARTER로 변경한다`, () => {
         const gumball = getHasQuarterMachine();
         const spyConsole = jest.spyOn(console, 'log');
         gumball.ejectQuarter();
         expect(spyConsole).toHaveBeenCalledWith('동전을 반환합니다.');
+        expect(gumball.state).toBe('NO_QUARTER')
     })
 
-    test(`HAS_QUARTER 상태 일 때 turnCrank를 실행하면 행동문을 출력하고 상태를 NO_QUARTER 변경한다`, () => {
+    test(`HAS_QUARTER 상태 일 때 turnCrank를 실행하면 행동문을 출력하고 상태를 SOLD로 변경한다`, () => {
         const gumball = getHasQuarterMachine();
         const spyConsole = jest.spyOn(console, 'log');
         gumball.turnCrank();
         expect(spyConsole).toHaveBeenCalledWith('손잡이를 돌리셨습니다.');
-        expect(gumball.state).toBe('NO_QUARTER');
+        expect(gumball.state).toBe('SOLD');
     })
 
     test(`HAS_QUARTER 상태 일 때 dispense를 실행하면 에러를 출력한다`, () => {

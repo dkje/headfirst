@@ -1,78 +1,70 @@
-import { MachineStatusType } from "./GumballMachine.meta";
+import { State, SoldOutState, SoldState, HasQuarterState, NoQuarterState } from "./State";
 
-interface GumballMachineIF {
-    state: keyof MachineStatusType
+export interface GumballMachineIF {
+    _state: State
     count: number;
     insertQuarter(): void;
     ejectQuarter(): void;
     turnCrank(): void;
     dispense(): void;
+    setState(state: State): void;
+    soldState: State;
+    soldOutState: State;
+    hasQuarterState: State;
+    noQuarterState: State;
 }
 
-
 export class GumballMachine implements GumballMachineIF {
-    state: keyof MachineStatusType = "SOLD_OUT";
     count: number;
+    soldState: State;
+    soldOutState: State;
+    hasQuarterState: State;
+    noQuarterState: State;
+    _state: State;
+
+
     constructor(count: number) {
-        this.count = count
-        if (this.count > 0) {
-            this.state = 'NO_QUARTER';
+        this.count = count;
+        this.soldOutState = new SoldOutState(this);
+        this.soldState = new SoldState(this);
+        this.hasQuarterState = new HasQuarterState(this);
+        this.noQuarterState = new NoQuarterState(this);
+        if (count > 0) {
+            this._state = this.noQuarterState;
+        } else {
+            this._state = this.soldOutState;
         }
     }
-
     insertQuarter(): void {
-        if (this.state === 'HAS_QUARTER') {
-            console.error('동전이 이미 있습니다.');
-        } else if (this.state === 'NO_QUARTER') {
-            console.log('동전을 넣었습니다.')
-            this.state = 'HAS_QUARTER';
-        } else if (this.state === 'SOLD') {
-            console.log('알맹이를 내보내고 있습니다.')
-        } else if (this.state === 'SOLD_OUT') {
-            console.error('재고가 없습니다.');
-        }
+        this._state.insertQuarter()
     }
-
     ejectQuarter(): void {
-        if (this.state === 'HAS_QUARTER') {
-            console.log("동전을 반환합니다.");
-        } else if (this.state === 'NO_QUARTER') {
-            console.error("동전이 없습니다.");
-        } else if (this.state === 'SOLD') {
-            console.error("동전이 없습니다.");
-        } else if (this.state === 'SOLD_OUT') {
-            console.error("재고가 없습니다.");
-        }
+        this._state.ejectQuarter()
     }
-
     turnCrank(): void {
-        if (this.state === 'HAS_QUARTER') {
-            console.log("손잡이를 돌리셨습니다.");
-            this.state = 'NO_QUARTER';
-        } else if (this.state === 'NO_QUARTER') {
-            console.error('동전을 넣어주세요.');
-        } else if (this.state === 'SOLD') {
-            console.error('손잡이는 한 번만 돌려 주세요.')
-        } else if (this.state === 'SOLD_OUT') {
-            console.error("재고가 없습니다.")
+        this._state.turnCrank()
+    }
+    dispense(): void {
+        this._state.dispense()
+
+    }
+
+    get state() {
+        if (this._state instanceof SoldOutState) {
+            return 'SOLD_OUT';
+        }
+        if (this._state instanceof SoldState) {
+            return 'SOLD';
+        }
+        if (this._state instanceof HasQuarterState) {
+            return 'HAS_QUARTER';
+        }
+        if (this._state instanceof NoQuarterState) {
+            return 'NO_QUARTER';
         }
     }
 
-    dispense(): void {
-        if (this.state === 'HAS_QUARTER') {
-            console.error("손잡이를 돌려주세요.")
-        } else if (this.state === 'NO_QUARTER') {
-            console.error("동전을 넣어주세요.")
-        } else if (this.state === 'SOLD') {
-            if (this.count) {
-                console.log("알맹이를 내보내고 있습니다.");
-                this.count = this.count - 1;
-            } else {
-                console.error("더 이상 알맹이가 없습니다.");
-            }
-            this.state = this.count ? 'NO_QUARTER' : 'SOLD_OUT';
-        } else if (this.state === 'SOLD_OUT') {
-            console.error('재고가 없습니다.')
-        }
+    setState(state: State) {
+        this._state = state;
     }
 }
