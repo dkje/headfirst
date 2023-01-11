@@ -1,11 +1,11 @@
 import {
 	State,
-	SoldOutState,
-	SoldState,
-	HasQuarterState,
-	NoQuarterState,
-	WinnerState,
-} from "./State";
+} from "./States/State.type";
+import { SoldState } from "./States/SoldState";
+import { SoldOutState } from "./States/SoldOutState";
+import { NoQuarterState } from "./States/NoQuarterState";
+import { HasQuarterState } from "./States/HasQuarterState";
+import { WinnerState } from "./States/WinnerState";
 
 export interface GumballMachineIF {
 	_state: State;
@@ -75,7 +75,7 @@ export class GumballMachine implements GumballMachineIF {
 		if (this._state instanceof NoQuarterState) {
 			return "NO_QUARTER";
 		}
-        
+
 		return "WINNER";
 	}
 

@@ -37,12 +37,14 @@ describe("풍선껌 기계", () => {
 	// !HAS_QUARTER 상태의 기능 구현 테스트
 	const getHasQuarterMachine = () => {
 		const gumball = getGumballMachine(5);
-		gumball.insertQuarter();
+		gumball.setState(gumball.hasQuarterState);
 		return gumball;
 	};
+	
 	test("getHasQuarterMachine는 HAS_QUARTER 상태의 인스턴스를 반환한다", () => {
 		expect(getHasQuarterMachine().state).toBe("HAS_QUARTER");
 	});
+
 	test(`HAS_QUARTER 상태 일 때 insertQuarter를 실행하면 오류를 출력한다`, () => {
 		const gumball = getHasQuarterMachine();
 		const spyConsole = jest.spyOn(global.console, "error");
@@ -76,6 +78,7 @@ describe("풍선껌 기계", () => {
 	// !NO_QUARTER 상태의 기능 구현 테스트
 	const getNoQuarterMachine = () => {
 		const gumball = getGumballMachine(4);
+		gumball.setState(gumball.noQuarterState);
 		return gumball;
 	};
 	test("getNoQuarterMachine는 NO_QUARTER 상태의 인스턴스를 반환한다", () => {
@@ -113,6 +116,7 @@ describe("풍선껌 기계", () => {
 	// !SOLD_OUT 상태의 기능 구현 테스트
 	const getSoldOutMachine = () => {
 		const gumball = getGumballMachine(0);
+		gumball.setState(gumball.soldOutState);
 		return gumball;
 	};
 
@@ -151,8 +155,7 @@ describe("풍선껌 기계", () => {
 	// !SOLD 상태의 기능 구현 테스트
 	const getSoldMachine = (count: number = 1) => {
 		const gumball = getGumballMachine(count);
-		gumball.insertQuarter();
-		gumball.turnCrank();
+		gumball.setState(gumball.soldState);
 		return gumball;
 	};
 	test("getSoldMachine은 SOLD 상태의 인스턴스를 반환한다", () => {

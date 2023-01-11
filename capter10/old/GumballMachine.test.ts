@@ -197,5 +197,4 @@ describe("풍선껌 기계", () => {
         expect(gumball.state).toBe('SOLD_OUT');
     })
 
-
 })
