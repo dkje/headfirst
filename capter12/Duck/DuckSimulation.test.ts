@@ -1,4 +1,6 @@
 import { DuckCall } from "./DuckCall";
+import { Goose } from "./Goose";
+import { GooseDuckAdapter } from "./GooseDuckAdapter";
 import { MallardDuck } from "./MallardDuck";
 import { RedheadDuck } from "./RedheadDuck";
 import { RubberDuck } from "./RubberDuck";
@@ -30,4 +32,11 @@ test(`오리 호출기는 quak을 실행할 시 "꽉꽉" 라고 말한다`, () =
     const duck = new DuckCall();
     duck.quack();
     expect(spy).toHaveBeenCalledWith("꽉꽉");
+})
+test(`거위는 quak을 실행할 시 "끽끽" 라고 말한다`, () => {
+    const spy = jest.spyOn(console, 'log');
+
+    const gooseLikeDuck = new GooseDuckAdapter(new Goose());
+    gooseLikeDuck.quack();
+    expect(spy).toHaveBeenCalledWith("끽끽");
 })
