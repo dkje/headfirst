@@ -2,9 +2,9 @@
 import { Person } from "./Person";
 import { PersonIF } from "./Person.type";
 
-export const wrapOwnerProxy = (person: PersonIF) => {
+export const wrapMeProxy = (person: PersonIF) => {
 	const handler: ProxyHandler<PersonIF> = {
-		set(target, p, newValue, receiver) {
+		set(target, key, newValue, receiver) {
 
 			const isAccessible = (p: any): p is keyof PersonIF => {
 				const accessiableKeys: Array<keyof PersonIF> = ['gender', 'interests', 'name'];
@@ -12,10 +12,10 @@ export const wrapOwnerProxy = (person: PersonIF) => {
 				return isAccessible;
 			}
 
-			if (isAccessible(p)) {
+			if (isAccessible(key)) {
 				// todo 타입 에러 어떻게 해결해야할지 모르겠음..
 				// @ts-ignore-start
-				target[p] = newValue;
+				target[key] = newValue;
 				// @ts-ignore-end
 				return true;
 			} else {
@@ -54,9 +54,10 @@ export const wrapOthersProxy = (person: PersonIF) => {
 };
 
 
+
 const drive = () => {
 	// 방금 만든 따끈 따끈한 계정
-	const me = wrapOwnerProxy(new Person());
+	const me = wrapMeProxy(new Person());
 	try {
 		console.log('------------');
 		console.log(`나의 이름은? ${me.name}`);

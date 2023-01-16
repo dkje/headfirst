@@ -66,6 +66,7 @@ export class ListProxy implements ListIF {
     }
 
     async printDom(): Promise<void> {
+
         // 이미 로딩이 끝난 경우
         if (this.list) {
             this.list.printDom();
@@ -80,7 +81,7 @@ export class ListProxy implements ListIF {
         // 데이터 리스트 프린트 위임하기 
         this.loading = true;
         this.setList(new List(this.dataUrl, this.targetDom));
-        this.list!.printDom();
+        this.list!.printDom(); // 기능 위임 진행
     }
 }
 

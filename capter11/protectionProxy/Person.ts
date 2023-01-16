@@ -25,6 +25,7 @@ export class Person implements PersonIF {
 		}
 		return this._rating / this._ratingCount;
 	}
+	
 	set name(name: string) {
 		this._name = name;
 	}
